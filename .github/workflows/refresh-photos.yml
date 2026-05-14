@@ -35,6 +35,12 @@ jobs:
           exit $EXIT_CODE
         continue-on-error: true
 
+      - name: Generate Flickr galleries manifest
+        id: flickr
+        run: |
+          node generate-flickr-galleries.mjs
+        continue-on-error: true
+
       # ── Token expired (exit code 2) ───────────────────────────────────
       - name: Notify home automation — token expired
         if: steps.manifest.outcome == 'failure' && steps.manifest.outputs.exit_code == '2'
@@ -55,13 +61,13 @@ jobs:
         if: steps.manifest.outcome == 'failure' && steps.manifest.outputs.exit_code != '2'
         run: exit 1
 
-      # ── Success: commit updated photos.json ───────────────────────────
-      - name: Commit and push updated photos.json
+      # ── Success: commit updated manifests ────────────────────────────
+      - name: Commit and push updated manifests
         if: steps.manifest.outcome == 'success'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add photos.json
-          # Only commit if the file actually changed
-          git diff --cached --quiet || git commit -m "chore: refresh photos manifest [$(date -u '+%Y-%m-%d')]"
+          git add photos.json flickr-galleries.json
+          # Only commit if files actually changed
+          git diff --cached --quiet || git commit -m "chore: refresh manifests [$(date -u '+%Y-%m-%d')]"
           git push
