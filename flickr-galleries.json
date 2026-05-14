@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-05-14T07:15:57.785Z",
-  "totalGalleries": 2,
+  "generatedAt": "2026-05-14T07:47:03.699Z",
+  "totalGalleries": 13,
   "galleries": [
     {
       "title": "Christmas Carol Concert 2023",
@@ -26,6 +26,149 @@
         "authorUrl": "https://www.flickr.com/photos/allan_harris/",
         "license": "CC BY-NC-ND 4.0",
         "licenseUrl": "https://creativecommons.org/licenses/by-nc-nd/4.0/"
+      }
+    },
+    {
+      "title": "YMS 2025 Verdi Requiem",
+      "flickrUrl": "https://www.flickr.com/photos/191721460@N06/galleries/72157724818375624/",
+      "cover": {
+        "imageUrl": "https://live.staticflickr.com/65535/54617348961_b78e7c461e_b.jpg",
+        "thumbUrl": "https://live.staticflickr.com/65535/54617348961_b78e7c461e_q.jpg",
+        "title": "Verdi Requiem in York Minster",
+        "authorName": "Allan Harris",
+        "authorUrl": "https://www.flickr.com/photos/allan_harris/",
+        "license": "CC BY-NC-ND 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-nc-nd/4.0/"
+      }
+    },
+    {
+      "title": "YMS 2025 Bach Mass in B Minor",
+      "flickrUrl": "https://www.flickr.com/photos/191721460@N06/galleries/72157724827272332/",
+      "cover": {
+        "imageUrl": "https://live.staticflickr.com/65535/54397601812_50cbecd0b5_b.jpg",
+        "thumbUrl": "https://live.staticflickr.com/65535/54397601812_50cbecd0b5_q.jpg",
+        "title": "YMS, Bach Mass in B Minor, rehearsal",
+        "authorName": "Allan Harris",
+        "authorUrl": "https://www.flickr.com/photos/allan_harris/",
+        "license": "CC BY-NC-ND 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-nc-nd/2.0/"
+      }
+    },
+    {
+      "title": "YMS 2026 St Matthew Passion",
+      "flickrUrl": "https://www.flickr.com/photos/191721460@N06/galleries/72157724827236927/",
+      "cover": {
+        "imageUrl": "https://live.staticflickr.com/65535/55151990497_a973f0fcc6_b.jpg",
+        "thumbUrl": "https://live.staticflickr.com/65535/55151990497_a973f0fcc6_q.jpg",
+        "title": "St Matthew Passion, YMS concert",
+        "authorName": "Allan Harris",
+        "authorUrl": "https://www.flickr.com/photos/allan_harris/",
+        "license": "CC BY-ND 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-nd/4.0/"
+      }
+    },
+    {
+      "title": "YMS 2023 June Haydn Creation York Minster",
+      "flickrUrl": "https://www.flickr.com/photos/191721460@N06/galleries/72157723340269394/",
+      "cover": {
+        "imageUrl": "https://live.staticflickr.com/65535/53821115526_dc2e2ea27c_b.jpg",
+        "thumbUrl": "https://live.staticflickr.com/65535/53821115526_dc2e2ea27c_q.jpg",
+        "title": "Haydn, The Creation, performance",
+        "authorName": "Allan Harris",
+        "authorUrl": "https://www.flickr.com/photos/allan_harris/",
+        "license": "CC BY-NC-ND 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-nc-nd/2.0/"
+      }
+    },
+    {
+      "title": "YMS 2023 march Brahms Requiem York Barbican",
+      "flickrUrl": "https://www.flickr.com/photos/191721460@N06/galleries/72157723349511192/",
+      "cover": {
+        "imageUrl": "https://live.staticflickr.com/65535/53615504615_533a85c9b5_b.jpg",
+        "thumbUrl": "https://live.staticflickr.com/65535/53615504615_533a85c9b5_q.jpg",
+        "title": "York Musical Society",
+        "authorName": "Allan Harris",
+        "authorUrl": "https://www.flickr.com/photos/allan_harris/",
+        "license": "CC BY-NC-ND 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-nc-nd/2.0/"
+      }
+    },
+    {
+      "title": "2024 November 9th YMS Durufle/Goodall Requiems",
+      "flickrUrl": "https://www.flickr.com/photos/191721460@N06/galleries/72157723278687663/",
+      "cover": {
+        "imageUrl": "https://live.staticflickr.com/65535/54132608520_38e5a4a1a1_b.jpg",
+        "thumbUrl": "https://live.staticflickr.com/65535/54132608520_38e5a4a1a1_q.jpg",
+        "title": "York Musical Society",
+        "authorName": "Allan Harris",
+        "authorUrl": "https://www.flickr.com/photos/allan_harris/",
+        "license": "CC BY-NC-ND 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-nc-nd/2.0/"
+      }
+    },
+    {
+      "title": "2023 November Opera Choruses",
+      "flickrUrl": "https://www.flickr.com/photos/191721460@N06/galleries/72157723179270927/",
+      "cover": {
+        "imageUrl": "https://live.staticflickr.com/65535/53325213288_99a797cc03_b.jpg",
+        "thumbUrl": "https://live.staticflickr.com/65535/53325213288_99a797cc03_q.jpg",
+        "title": "York Musical Society - performance 04.11.23",
+        "authorName": "Allan Harris",
+        "authorUrl": "https://www.flickr.com/photos/allan_harris/",
+        "license": "CC BY-NC-ND 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-nc-nd/2.0/"
+      }
+    },
+    {
+      "title": "YMS Vaughan Williams June 2023",
+      "flickrUrl": "https://www.flickr.com/photos/191721460@N06/galleries/72157721892524065/",
+      "cover": {
+        "imageUrl": "https://live.staticflickr.com/65535/52971678390_4c01c98968_b.jpg",
+        "thumbUrl": "https://live.staticflickr.com/65535/52971678390_4c01c98968_q.jpg",
+        "title": "York Musical Society",
+        "authorName": "Allan Harris",
+        "authorUrl": "https://www.flickr.com/photos/allan_harris/",
+        "license": "CC BY-NC-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/2.0/"
+      }
+    },
+    {
+      "title": "YMS March 2023 Requiem Aeternae",
+      "flickrUrl": "https://www.flickr.com/photos/191721460@N06/galleries/72157721566712767/",
+      "cover": {
+        "imageUrl": "https://live.staticflickr.com/65535/52746520962_ba68c8e980_b.jpg",
+        "thumbUrl": "https://live.staticflickr.com/65535/52746520962_ba68c8e980_q.jpg",
+        "title": "York Musical Society - York Minster",
+        "authorName": "Allan Harris",
+        "authorUrl": "https://www.flickr.com/photos/allan_harris/",
+        "license": "CC BY-ND 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-nd/2.0/"
+      }
+    },
+    {
+      "title": "YMS December 2022 Fountains Abbey and A Christmas Celebration",
+      "flickrUrl": "https://www.flickr.com/photos/191721460@N06/galleries/72157721322232479/",
+      "cover": {
+        "imageUrl": "https://live.staticflickr.com/65535/52544347469_6a24d660dd_b.jpg",
+        "thumbUrl": "https://live.staticflickr.com/65535/52544347469_6a24d660dd_q.jpg",
+        "title": "YMS carols at Fountains",
+        "authorName": "Allan Harris",
+        "authorUrl": "https://www.flickr.com/photos/allan_harris/",
+        "license": "CC BY-ND 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-nd/2.0/"
+      }
+    },
+    {
+      "title": "YMS at Fountains Abbey Dec 2021",
+      "flickrUrl": "https://www.flickr.com/photos/191721460@N06/galleries/72157720245970777/",
+      "cover": {
+        "imageUrl": "https://live.staticflickr.com/65535/51726347586_14e27df164_b.jpg",
+        "thumbUrl": "https://live.staticflickr.com/65535/51726347586_14e27df164_q.jpg",
+        "title": "Fountains Abbey, York Musical Society carol concert",
+        "authorName": "Allan Harris",
+        "authorUrl": "https://www.flickr.com/photos/allan_harris/",
+        "license": "CC BY-ND 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-nd/2.0/"
       }
     }
   ]
