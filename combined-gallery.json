@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-05-15T11:45:18.132Z",
-  "totalYears": 18,
+  "generatedAt": "2026-05-15T13:52:58.248Z",
+  "totalYears": 16,
   "totalAlbums": 50,
   "years": [
     {
@@ -5135,11 +5135,6 @@
       ]
     },
     {
-      "year": "2013",
-      "coverUrl": null,
-      "albums": []
-    },
-    {
       "year": "2012",
       "coverUrl": "https://cdn2.permanent.org/originals/3757437/3757437?t=1810234700&Expires=1810234700&Signature=dxVKD3ix2jolj~LxBBBDMG7V3GZzx2CD2sduAhCqTET87hNWdTy9PAGFjVSr0tcV1ezBMEj~mtVbnmL20DcuScB7WCzKxly6tTe2WR6EPAyQo9Td5Lczpk9cwsso0GGUccqN0Lq2eQ9pC7Ax~ItzYwHodw31~TdTydaRWQW7DYApDl2jP52mbOxKeDIQTtQ~NBxzerl7pcVw15YkfaRcg9aT4DPnVJpHVdXaYkIs2YHQvArl3jcHgQ0fsuHLnHRE1za9iVTi27hwDauc4olwBGC74jnA1VaRQQDksemztImvuF1WVwvVobNzwP3nTeztBHwmL1bldmD71kb8zSwSgQ__&Key-Pair-Id=APKAJP2D34UGZ6IG443Q",
       "albums": [
@@ -5180,11 +5175,6 @@
           ]
         }
       ]
-    },
-    {
-      "year": "2011",
-      "coverUrl": null,
-      "albums": []
     },
     {
       "year": "2010",
