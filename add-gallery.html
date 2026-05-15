@@ -258,6 +258,10 @@
     <input type="text" id="title" placeholder="e.g. Christmas Concert 2024">
   </div>
   <div class="field">
+    <label for="year">Year</label>
+    <input type="text" id="year" placeholder="e.g. 2024" maxlength="4">
+  </div>
+  <div class="field">
     <label for="flickr-url">Flickr Gallery URL</label>
     <input type="url" id="flickr-url" placeholder="https://www.flickr.com/photos/…/galleries/…/">
   </div>
@@ -392,10 +396,12 @@ function renderList(galleries) {
 // ── Add gallery ───────────────────────────────────────────────────────────────
 async function addGallery() {
   const title      = document.getElementById('title').value.trim();
+  const year       = document.getElementById('year').value.trim();
   const flickrUrl  = document.getElementById('flickr-url').value.trim();
   const coverUrl   = document.getElementById('cover-url').value.trim();
 
   if (!title)     { showStatus('Please enter a gallery title.', 'err'); return; }
+  if (!year)      { showStatus('Please enter a year.', 'err'); return; }
   if (!flickrUrl) { showStatus('Please enter the Flickr gallery URL.', 'err'); return; }
   if (!coverUrl)  { showStatus('Please enter a cover photo URL.', 'err'); return; }
   if (!getToken()) { showStatus('Please save your GitHub token first.', 'err'); return; }
@@ -416,11 +422,12 @@ async function addGallery() {
       return;
     }
 
-    content.push({ title, flickrUrl, coverPhotoUrl: coverUrl });
+    content.push({ title, year, flickrUrl, coverPhotoUrl: coverUrl });
     await saveConfig(content, sha);
 
     showStatus(`✓ "${title}" added. The nightly workflow will update the widget, or trigger a manual run now.`, 'ok');
     document.getElementById('title').value     = '';
+    document.getElementById('year').value      = '';
     document.getElementById('flickr-url').value = '';
     document.getElementById('cover-url').value  = '';
     renderList(content);
