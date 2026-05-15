@@ -134,7 +134,6 @@ async function run() {
 
   const years = Array.from(allYears)
     .sort((a, b) => b.localeCompare(a)) // descending
-    .filter(year => year.albums.length > 0)
     .map(year => {
       const permanent = permanentByYear[year] || [];
       const flickr    = flickrByYear[year]    || [];
@@ -148,7 +147,8 @@ async function run() {
       const albums = [...permanent, ...flickr];
 
       return { year, coverUrl, albums };
-    });
+    })
+    .filter(y => y.albums.length > 0);
 
   // ── 4. Write output ─────────────────────────────────────────────────────────
   const output = {
