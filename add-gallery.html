@@ -252,7 +252,7 @@
 
 <!-- Add gallery -->
 <div class="card">
-  <div class="card-title">Add New Gallery</div>
+  <div class="card-title">Add New Flickr Gallery</div>
   <div class="field">
     <label for="title">Gallery Title</label>
     <input type="text" id="title" placeholder="e.g. Christmas Concert 2024">
@@ -273,9 +273,30 @@
   <button class="btn btn-primary" id="add-btn" onclick="addGallery()">Add Gallery</button>
 </div>
 
-<!-- Current galleries -->
+<!-- Permanent photographer config -->
 <div class="card">
-  <div class="card-title">Current Galleries</div>
+  <div class="card-title">Permanent.org Photographer Credits</div>
+  <div class="field">
+    <label for="default-photographer">Default photographer</label>
+    <input type="text" id="default-photographer" placeholder="e.g. Lesley Peatfield">
+    <div class="hint">Applied to all Permanent albums not listed below.</div>
+  </div>
+  <button class="btn btn-primary" id="save-photographer-btn" onclick="savePhotographerConfig()">Save Default</button>
+  <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--border)">
+    <div class="card-title" style="margin-bottom:1rem">Album overrides</div>
+    <div class="field">
+      <label for="album-name">Album name (exact)</label>
+      <input type="text" id="album-name" placeholder="e.g. YMS visit to Munster May 2009">
+    </div>
+    <div class="field">
+      <label for="album-photographer">Photographer</label>
+      <input type="text" id="album-photographer" placeholder="e.g. Philip Tollitt">
+    </div>
+    <button class="btn btn-ghost" onclick="addAlbumOverride()">Add override</button>
+  </div>
+  <ul class="gallery-list" id="override-list" style="margin-top:1rem"></ul>
+</div>
+  <div class="card-title">Current Flickr Galleries</div>
   <ul class="gallery-list" id="gallery-list">
     <li class="empty-note">Loading…</li>
   </ul>
@@ -466,9 +487,99 @@ function esc(s) {
   return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
+// ── Permanent config ──────────────────────────────────────────────────────────
+const PERM_API = `https://api.github.com/repos/${OWNER}/${REPO}/contents/permanent-config.json`;
+
+async function fetchPermConfig() {
+  const res = await fetch(PERM_API, {
+    headers: { 'Authorization': `Bearer ${getToken()}`, 'Accept': 'application/vnd.github+json' }
+  });
+  if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
+  const data = await res.json();
+  return { content: JSON.parse(atob(data.content.replace(/\n/g, ''))), sha: data.sha };
+}
+
+async function savePermConfig(content, sha) {
+  const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(content, null, 2) + '\n')));
+  const res = await fetch(PERM_API, {
+    method: 'PUT',
+    headers: { 'Authorization': `Bearer ${getToken()}`, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message: 'chore: update permanent photographer config', content: encoded, sha, branch: BRANCH }),
+  });
+  if (!res.ok) { const err = await res.json(); throw new Error(err.message || `GitHub API error: ${res.status}`); }
+}
+
+async function loadPermConfig() {
+  if (!getToken()) return;
+  try {
+    const { content } = await fetchPermConfig();
+    document.getElementById('default-photographer').value = content.defaultPhotographer || '';
+    renderOverrides(content.albums || {});
+  } catch(e) {}
+}
+
+async function savePhotographerConfig() {
+  const defaultPhotographer = document.getElementById('default-photographer').value.trim();
+  if (!getToken()) { showStatus('Please save your GitHub token first.', 'err'); return; }
+  const btn = document.getElementById('save-photographer-btn');
+  btn.disabled = true; btn.textContent = 'Saving…';
+  try {
+    const { content, sha } = await fetchPermConfig();
+    content.defaultPhotographer = defaultPhotographer;
+    await savePermConfig(content, sha);
+    showStatus('✓ Default photographer saved.', 'ok');
+  } catch(e) { showStatus('Error: ' + e.message, 'err'); }
+  btn.disabled = false; btn.textContent = 'Save Default';
+}
+
+async function addAlbumOverride() {
+  const name         = document.getElementById('album-name').value.trim();
+  const photographer = document.getElementById('album-photographer').value.trim();
+  if (!name || !photographer) { showStatus('Please enter both album name and photographer.', 'err'); return; }
+  if (!getToken()) { showStatus('Please save your GitHub token first.', 'err'); return; }
+  try {
+    const { content, sha } = await fetchPermConfig();
+    content.albums = content.albums || {};
+    content.albums[name] = photographer;
+    await savePermConfig(content, sha);
+    document.getElementById('album-name').value = '';
+    document.getElementById('album-photographer').value = '';
+    renderOverrides(content.albums);
+    showStatus(`✓ Override added for "${name}".`, 'ok');
+  } catch(e) { showStatus('Error: ' + e.message, 'err'); }
+}
+
+async function removeOverride(name) {
+  if (!confirm(`Remove override for "${name}"?`)) return;
+  try {
+    const { content, sha } = await fetchPermConfig();
+    delete content.albums[name];
+    await savePermConfig(content, sha);
+    renderOverrides(content.albums);
+    showStatus(`✓ Override removed.`, 'ok');
+  } catch(e) { showStatus('Error: ' + e.message, 'err'); }
+}
+
+function renderOverrides(albums) {
+  const list = document.getElementById('override-list');
+  const keys = Object.keys(albums);
+  if (!keys.length) { list.innerHTML = '<li class="empty-note">No overrides — default photographer applies to all albums.</li>'; return; }
+  list.innerHTML = '';
+  keys.forEach(function(name) {
+    const li = document.createElement('li');
+    li.className = 'gallery-item';
+    li.innerHTML =
+      '<div class="gallery-thumb-placeholder">📷</div>' +
+      '<div class="gallery-info"><div class="gallery-name">' + esc(name) + '</div><div class="gallery-url">' + esc(albums[name]) + '</div></div>' +
+      '<button class="gallery-remove" onclick="removeOverride(' + JSON.stringify(name) + ')" title="Remove">✕</button>';
+    list.appendChild(li);
+  });
+}
+
 // ── Init ──────────────────────────────────────────────────────────────────────
 updateTokenUI();
 loadGalleries();
+loadPermConfig();
 </script>
 </body>
 </html>
