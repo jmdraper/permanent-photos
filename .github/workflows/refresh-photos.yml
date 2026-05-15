@@ -23,22 +23,16 @@ jobs:
       - name: Install dependencies
         run: npm install @permanentorg/sdk
 
-      - name: Run manifest script
+      - name: Run combined gallery script
         id: manifest
         env:
           PERMANENT_TOKEN:     ${{ secrets.PERMANENT_TOKEN }}
           PERMANENT_FOLDER_ID: ${{ secrets.PERMANENT_FOLDER_ID }}
         run: |
-          node generate-manifest.mjs
+          node generate-combined-gallery.mjs
           EXIT_CODE=$?
           echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
           exit $EXIT_CODE
-        continue-on-error: true
-
-      - name: Generate Flickr galleries manifest
-        id: flickr
-        run: |
-          node generate-flickr-galleries.mjs
         continue-on-error: true
 
       # ── Token expired (exit code 2) ───────────────────────────────────
@@ -61,13 +55,12 @@ jobs:
         if: steps.manifest.outcome == 'failure' && steps.manifest.outputs.exit_code != '2'
         run: exit 1
 
-      # ── Success: commit updated manifests ────────────────────────────
-      - name: Commit and push updated manifests
+      # ── Success: commit updated manifest ─────────────────────────────
+      - name: Commit and push updated manifest
         if: steps.manifest.outcome == 'success'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add photos.json flickr-galleries.json
-          # Only commit if files actually changed
-          git diff --cached --quiet || git commit -m "chore: refresh manifests [$(date -u '+%Y-%m-%d')]"
+          git add combined-gallery.json
+          git diff --cached --quiet || git commit -m "chore: refresh combined gallery [$(date -u '+%Y-%m-%d')]"
           git push
