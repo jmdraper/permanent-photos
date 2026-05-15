@@ -86,8 +86,11 @@ async function run() {
 
     const yearContents = await getFolder(CLIENT, { folderId: yearFolder.id });
 
+    const records = yearContents.archiveRecords || [];
+    const folders = yearContents.folders || [];
+
     // Photos directly in year folder (not in sub-albums)
-    const directPhotos = yearContents.archiveRecords
+    const directPhotos = records
       .filter(r => r.type === IMAGE_TYPE)
       .map(mapPhoto);
 
@@ -102,9 +105,9 @@ async function run() {
     }
 
     // Sub-album folders
-    for (const albumFolder of yearContents.folders) {
+    for (const albumFolder of folders) {
       const albumContents = await getFolder(CLIENT, { folderId: albumFolder.id });
-      const photos = albumContents.archiveRecords
+      const photos = (albumContents.archiveRecords || [])
         .filter(r => r.type === IMAGE_TYPE)
         .map(mapPhoto);
 
