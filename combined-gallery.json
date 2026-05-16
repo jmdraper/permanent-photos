@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-16T03:14:58.421Z",
+  "generatedAt": "2026-05-16T08:55:51.588Z",
   "totalYears": 16,
   "totalAlbums": 50,
   "years": [
@@ -771,6 +771,20 @@
           "photographer": "Allan Harris",
           "coverUrl": "https://live.staticflickr.com/65535/54132608520_38e5a4a1a1_b.jpg",
           "flickrUrl": "https://www.flickr.com/photos/191721460@N06/galleries/72157723278687663/"
+        },
+        {
+          "type": "flickr",
+          "name": "YMS 2024 June Haydn Creation York Minster",
+          "photographer": "Allan Harris",
+          "coverUrl": "https://live.staticflickr.com/65535/53821115526_dc2e2ea27c_b.jpg",
+          "flickrUrl": "https://www.flickr.com/photos/191721460@N06/galleries/72157723340269394/"
+        },
+        {
+          "type": "flickr",
+          "name": "YMS 2024 March Brahms Requiem York Barbican",
+          "photographer": "Allan Harris",
+          "coverUrl": "https://live.staticflickr.com/65535/53615504615_533a85c9b5_b.jpg",
+          "flickrUrl": "https://www.flickr.com/photos/191721460@N06/galleries/72157723349511192/"
         }
       ]
     },
@@ -1034,7 +1048,7 @@
         },
         {
           "type": "permanent",
-          "name": "2023 March Requiem Aeternae York Minster",
+          "name": "2023 March Requiem Aeternam York Minster",
           "photographer": "Lesley Peatfield",
           "coverUrl": "https://cdn2.permanent.org/originals/3756924/3756924?t=1810233620&Expires=1810233620&Signature=CQJa9rdv0neXo-mw6JmuhRbocThKJD7cj9sDxuEyc7laTivHeGNI~LBmcJCfsnh3ETEd5QPs7Om1qTe1Lqz--zIjP0QfiWpKE68-SC8U52Ne1kjHJIEQGVSk3Qb8tlBhx0cVFWZFp8KpYuQcGdti695jT7065F3wFOrAfTuMTm~LXtyCygxHjxdU30l6CMODZ9g5OXdh4pl1FjfxDbuaK84pHyty9BL1T0dQa4RFF8gt3REzvTxeig7R~F03eWnBHvZR0ftMsv1NbhRsVsm3-kefapRTmp98aAdkAsQQo3MugTHH1e65BUwVUvKYbrTeu4mh-QmrUK70vGatQZB-Dg__&Key-Pair-Id=APKAJP2D34UGZ6IG443Q",
           "photos": [
@@ -1581,20 +1595,6 @@
           "photographer": "Allan Harris",
           "coverUrl": "https://live.staticflickr.com/65535/53389438127_31072663fb_b.jpg",
           "flickrUrl": "https://www.flickr.com/photos/191721460@N06/galleries/72157723278627233/"
-        },
-        {
-          "type": "flickr",
-          "name": "YMS 2023 June Haydn Creation York Minster",
-          "photographer": "Allan Harris",
-          "coverUrl": "https://live.staticflickr.com/65535/53821115526_dc2e2ea27c_b.jpg",
-          "flickrUrl": "https://www.flickr.com/photos/191721460@N06/galleries/72157723340269394/"
-        },
-        {
-          "type": "flickr",
-          "name": "YMS 2023 march Brahms Requiem York Barbican",
-          "photographer": "Allan Harris",
-          "coverUrl": "https://live.staticflickr.com/65535/53615504615_533a85c9b5_b.jpg",
-          "flickrUrl": "https://www.flickr.com/photos/191721460@N06/galleries/72157723349511192/"
         },
         {
           "type": "flickr",
@@ -3229,7 +3229,7 @@
         {
           "type": "permanent",
           "name": "YMS March 2018 Bach St Matthew Passion",
-          "photographer": "Lesley Peatfield",
+          "photographer": "Allan Harris",
           "coverUrl": "https://cdn2.permanent.org/originals/3757241/3757241?t=1810234249&Expires=1810234249&Signature=VfYK2KCsonMXPdrGSPQahZhVB7UHbSBEcf2nvNagJzSY19vnnkpgnspbUwpLZ~-1RUGROWNooML16NEeLKwJ1EDgEGep~pG7B9YN0sTdmN-rDDxvNZ7TcBEpU-6aZvCOSevzGELAe~5pNcAAW9hDkkNwxwrKYQVMxBjbPX2aH10qgt4AFWUCP4svSDPo9KU6N34Y3Qt96WMI0xBL1kkK0sH0HwcploSnfhgzV80DUOeb~GGi1qNCMMdPASZNbk4XaEZ44puqYE8v5un0tVB6PS0x2yHd1uKOTLm75dup8bbgU9EVICecj8KJKJK1iaJQCg37pyiJm-IFW9ibp3O9ZA__&Key-Pair-Id=APKAJP2D34UGZ6IG443Q",
           "photos": [
             {
@@ -3770,7 +3770,7 @@
         {
           "type": "permanent",
           "name": "YMS visit to Münster, June 2018",
-          "photographer": "Lesley Peatfield",
+          "photographer": "Allan Harris",
           "coverUrl": "https://cdn2.permanent.org/originals/3757222/3757222?t=1810234203&Expires=1810234203&Signature=PRAxYnfPoz0x8nD3-gfE0bYv1JBr0~1ox1D39KO3j~jXpk8XIEK6UZqjg6o5l4AlyPawunxb70WM-wduTM03p-Ab9U4hCv5HlC8HLCNx8bjEBGOfTaAQzeewLRXlU3v87AR-2mwGwt8DcZ74hNL~b9BEabzQTYpzN0LnEyxLuXKR4EcnzI0xOpMitDxsEOkt8J0hnoBLq7exTHj9YpRhtb-gRRV~4ytSyDI2L0rvwH-lmJaVccVGs5PolKiw3QeS25h7HcnI-L5WY~N1WmmBJvGadaEiN5zd2GzHFirdupIUnqOLkiDjRRTzBEAV6FmbVntc58ha0X~kXZKbpRF9sw__&Key-Pair-Id=APKAJP2D34UGZ6IG443Q",
           "photos": [
             {
@@ -4022,7 +4022,7 @@
         {
           "type": "permanent",
           "name": "April 2017 - Handel Israel in Egypt, with Coventry choir",
-          "photographer": "Lesley Peatfield",
+          "photographer": "Allan Harris",
           "coverUrl": "https://cdn2.permanent.org/originals/3757332/3757332?t=1810234447&Expires=1810234447&Signature=afA~9KUQFxc7vseRF9RSWCyKifNJNpj3MKE~lpzZHNGRvysjylk9uyLOks~459yQ94yxVwCvevpb7U8zsQLnP1bwA8QY9GxLcWDQ3be~EjhCxZU-PI9adbnJK864zg-pxTixkImhY0tgjhuTx2vr9fNucDE~DWKzQi0yM5HSgx349DEAZV7jW~RdTWVKwAkFMMp1Dnv7DivERxzc6ZNADq9yEOtI2LpCEHxU8Spco3cr8b9lfmR8UFqV1aa3NXXd2xN~ttbh0uQtBaTPUKYkJL6ljA~jPyvRpplVvCG92Uq2EzfyP-uCgNWcfRxKtALhApLGAtr3oAMQn9ZRcO8oXA__&Key-Pair-Id=APKAJP2D34UGZ6IG443Q",
           "photos": [
             {
@@ -4431,7 +4431,7 @@
         {
           "type": "permanent",
           "name": "June 2017 - Mozart Requiem",
-          "photographer": "Lesley Peatfield",
+          "photographer": "Allan Harris",
           "coverUrl": "https://cdn2.permanent.org/originals/3757318/3757318?t=1810234415&Expires=1810234415&Signature=ERkBbndFEblxeEHAo0zou02LCMzJMzEV~GBNp6YphUqaaRh1iNFyN6xUV5rG6uUZsREmZoLlaKtLqcoNtK8BwFQN2nE0vHVidqWU8yBX6S1qZQAQjmj~bGUJMYNzN2L4ezlzZ~MkJNwAizcswXK6jxiDEmT7lDReYOIdbU9sb4eg3l~N201BfhOa4mpPoZGeZrKcHtZDY0YG8FFOzxV9qOBS7AaHto-V3SNEt8vtUK6N0mhEsWVup6fppZPDwQKwWtxIgzThze4ihLd9g3I6QdPdumazSL59RN-j10-W-Ab5~jedyATylUyqsnBkQDCvR6BP21TDNA5ejkA9s-SchQ__&Key-Pair-Id=APKAJP2D34UGZ6IG443Q",
           "photos": [
             {
