@@ -1,0 +1,19 @@
+{
+  "generatedAt": "2026-05-14T07:06:19.733Z",
+  "totalGalleries": 1,
+  "galleries": [
+    {
+      "title": "Christmas Carol Concert 2023",
+      "flickrUrl": "https://www.flickr.com/photos/191721460@N06/galleries/72157723278627233/",
+      "cover": {
+        "imageUrl": "https://live.staticflickr.com/65535/53389438127_31072663fb_b.jpg",
+        "thumbUrl": "https://live.staticflickr.com/65535/53389438127_31072663fb_q.jpg",
+        "title": "York Musical Society Christmas Carol Concert",
+        "authorName": "Allan Harris",
+        "authorUrl": "https://www.flickr.com/photos/allan_harris/",
+        "license": "CC BY-NC-ND 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-nc-nd/2.0/"
+      }
+    }
+  ]
+}

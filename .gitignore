@@ -1,0 +1,4 @@
+node_modules/
+.DS_Store
+metadata-progress.json
+upload-progress.json

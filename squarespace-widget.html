@@ -1,0 +1,489 @@
+<!--
+  PERMANENT.ORG PHOTO GALLERY — Squarespace Embed Widget
+  Paste this entire file into a Squarespace Code Block (set to HTML mode).
+  Edit DATA_SOURCE in the <script> below to point at your photos.json URL.
+-->
+<style>
+  .pg * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .pg {
+    /* ── Tune these to match your Squarespace page ── */
+    --pg-height: 600px;   /* height of the gallery area              */
+    --pg-cols:   3;        /* columns on desktop                      */
+    --pg-gap:    2px;      /* gap between tiles                       */
+    --pg-accent: #c8a96e;  /* hover accent — match your brand colour  */
+    --pg-radius: 3px;
+
+    font-family:    inherit;
+    color:          inherit;
+    height:         var(--pg-height);
+    display:        flex;
+    flex-direction: column;
+    overflow:       hidden;
+    background:     transparent;
+  }
+
+  /* ── Breadcrumb bar ──────────────────────────────────────────────────── */
+  .pg-crumbs {
+    display:        flex;
+    align-items:    center;
+    gap:            0.3rem;
+    flex-wrap:      wrap;
+    min-height:     2rem;
+    padding-bottom: 0.5rem;
+    font-size:      0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    flex-shrink:    0;
+  }
+  .pg-crumbs:empty { display: none; }
+
+  .pg-crumb {
+    background:     none;
+    border:         none;
+    padding:        0;
+    cursor:         pointer;
+    font:           inherit;
+    font-size:      inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    color:          inherit;
+    opacity:        0.45;
+    transition:     opacity 0.15s;
+  }
+  .pg-crumb:hover    { opacity: 0.9; }
+  .pg-crumb.active   { opacity: 1; cursor: default; }
+  .pg-crumb-sep      { opacity: 0.25; font-size: 0.6rem; }
+
+  /* ── Scrollable area ─────────────────────────────────────────────────── */
+  .pg-scroll {
+    flex:           1;
+    overflow-y:     auto;
+    overflow-x:     hidden;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(128,128,128,0.25) transparent;
+  }
+  .pg-scroll::-webkit-scrollbar       { width: 3px; }
+  .pg-scroll::-webkit-scrollbar-track { background: transparent; }
+  .pg-scroll::-webkit-scrollbar-thumb { background: rgba(128,128,128,0.2); border-radius: 2px; }
+
+  /* ── Grid ────────────────────────────────────────────────────────────── */
+  .pg-grid {
+    display:               grid;
+    grid-template-columns: repeat(var(--pg-cols), 1fr);
+    gap:                   var(--pg-gap);
+  }
+
+  /* ── Album tile ──────────────────────────────────────────────────────── */
+  .pg-album {
+    position:     relative;
+    aspect-ratio: 1;
+    cursor:       pointer;
+    overflow:     hidden;
+    background:   rgba(128,128,128,0.1);
+  }
+  .pg-album img {
+    width:      100%;
+    height:     100%;
+    object-fit: cover;
+    display:    block;
+    transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.3s;
+    opacity:    0;
+  }
+  .pg-album img.loaded  { opacity: 1; }
+  .pg-album:hover img   { transform: scale(1.06); }
+
+  .pg-album-overlay {
+    position:   absolute;
+    inset:      0;
+    background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.15) 55%, transparent 100%);
+    display:    flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding:    0.7rem 0.6rem;
+    transition: background 0.25s;
+  }
+  .pg-album:hover .pg-album-overlay {
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 55%, transparent 100%);
+  }
+  .pg-album-name {
+    color:          #fff;
+    font-size:      0.78rem;
+    font-weight:    500;
+    letter-spacing: 0.03em;
+    line-height:    1.3;
+    text-shadow:    0 1px 4px rgba(0,0,0,0.6);
+  }
+  .pg-album-meta {
+    color:          rgba(255,255,255,0.55);
+    font-size:      0.6rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    margin-top:     0.2rem;
+  }
+
+  /* ── Photo tile ──────────────────────────────────────────────────────── */
+  .pg-photo {
+    position:     relative;
+    aspect-ratio: 1;
+    cursor:       pointer;
+    overflow:     hidden;
+    background:   rgba(128,128,128,0.1);
+  }
+  .pg-photo img {
+    width:      100%;
+    height:     100%;
+    object-fit: cover;
+    display:    block;
+    transition: transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.3s;
+    opacity:    0;
+  }
+  .pg-photo img.loaded  { opacity: 1; }
+  .pg-photo:hover img   { transform: scale(1.04); }
+
+  .pg-photo-overlay {
+    position:   absolute;
+    inset:      0;
+    background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 50%);
+    opacity:    0;
+    transition: opacity 0.2s;
+    display:    flex;
+    align-items: flex-end;
+    padding:    0.45rem;
+  }
+  .pg-photo:hover .pg-photo-overlay { opacity: 1; }
+  .pg-photo-title {
+    color:          #fff;
+    font-size:      0.63rem;
+    letter-spacing: 0.03em;
+    line-height:    1.3;
+    overflow:       hidden;
+    display:        -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  /* ── Skeleton loader ─────────────────────────────────────────────────── */
+  .pg-skel {
+    aspect-ratio: 1;
+    background:   rgba(128,128,128,0.1);
+    position:     relative;
+    overflow:     hidden;
+  }
+  .pg-skel::after {
+    content:    '';
+    position:   absolute;
+    inset:      0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 50%, transparent 100%);
+    animation:  pg-shimmer 1.5s infinite;
+  }
+  @keyframes pg-shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+
+  /* ── Empty / error ───────────────────────────────────────────────────── */
+  .pg-message {
+    grid-column: 1 / -1;
+    padding:     3rem 1rem;
+    text-align:  center;
+    font-size:   0.8rem;
+    opacity:     0.45;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── Lightbox ────────────────────────────────────────────────────────── */
+  .pg-lb {
+    display:         none;
+    position:        fixed;
+    inset:           0;
+    z-index:         99999;
+    background:      rgba(0,0,0,0.92);
+    align-items:     center;
+    justify-content: center;
+    backdrop-filter: blur(6px);
+  }
+  .pg-lb.open { display: flex; }
+
+  .pg-lb-inner {
+    position:       relative;
+    max-width:      min(92vw, 1200px);
+    max-height:     92vh;
+    display:        flex;
+    flex-direction: column;
+    align-items:    center;
+  }
+  .pg-lb-img {
+    max-width:  100%;
+    max-height: 82vh;
+    object-fit: contain;
+    display:    block;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.8);
+  }
+  .pg-lb-caption {
+    margin-top:     0.6rem;
+    font-size:      0.72rem;
+    color:          rgba(255,255,255,0.45);
+    letter-spacing: 0.06em;
+    text-align:     center;
+    font-family:    inherit;
+  }
+  .pg-lb-close {
+    position:    absolute;
+    top:         -2.2rem;
+    right:       0;
+    background:  none;
+    border:      none;
+    color:       rgba(255,255,255,0.45);
+    font-size:   1.4rem;
+    cursor:      pointer;
+    line-height: 1;
+    padding:     0.2rem;
+    transition:  color 0.15s;
+    font-family: inherit;
+  }
+  .pg-lb-close:hover { color: #fff; }
+
+  .pg-lb-nav {
+    position:      absolute;
+    top:           50%;
+    transform:     translateY(-50%);
+    background:    rgba(0,0,0,0.3);
+    border:        none;
+    color:         rgba(255,255,255,0.8);
+    font-size:     1.4rem;
+    padding:       0.35rem 0.6rem;
+    cursor:        pointer;
+    transition:    background 0.15s, color 0.15s;
+    border-radius: var(--pg-radius);
+    line-height:   1;
+    font-family:   inherit;
+  }
+  .pg-lb-nav:hover { background: rgba(255,255,255,0.12); color: #fff; }
+  .pg-lb-nav.prev  { left:  -3.2rem; }
+  .pg-lb-nav.next  { right: -3.2rem; }
+
+  /* ── Responsive ──────────────────────────────────────────────────────── */
+  @media (max-width: 640px) { .pg { --pg-cols: 2; --pg-height: 480px; } }
+  @media (max-width: 380px) { .pg { --pg-cols: 1; } }
+</style>
+
+<div class="pg" id="pg">
+  <nav class="pg-crumbs" id="pg-crumbs" aria-label="Album navigation"></nav>
+  <div class="pg-scroll">
+    <div class="pg-grid" id="pg-grid">
+      <div class="pg-skel"></div><div class="pg-skel"></div>
+      <div class="pg-skel"></div><div class="pg-skel"></div>
+      <div class="pg-skel"></div><div class="pg-skel"></div>
+    </div>
+  </div>
+</div>
+
+<div class="pg-lb" id="pg-lb">
+  <div class="pg-lb-inner">
+    <button class="pg-lb-close" id="pg-lb-close">×</button>
+    <button class="pg-lb-nav prev" id="pg-lb-prev">‹</button>
+    <img class="pg-lb-img" id="pg-lb-img" src="" alt="">
+    <button class="pg-lb-nav next" id="pg-lb-next">›</button>
+    <div class="pg-lb-caption" id="pg-lb-caption"></div>
+  </div>
+</div>
+
+<script>
+(function () {
+
+  // ── CONFIGURATION — edit this ──────────────────────────────────────────
+  var DATA_SOURCE = 'https://jmdraper.github.io/permanent-photos/photos.json';
+  // ──────────────────────────────────────────────────────────────────────
+
+  var tree        = null;
+  var currentNode = null;
+  var lbPhotos    = [];
+  var lbIndex     = 0;
+
+  var grid   = document.getElementById('pg-grid');
+  var crumbs = document.getElementById('pg-crumbs');
+  var lb     = document.getElementById('pg-lb');
+  var lbImg  = document.getElementById('pg-lb-img');
+  var lbCap  = document.getElementById('pg-lb-caption');
+
+  document.getElementById('pg-lb-close').onclick = closeLb;
+  document.getElementById('pg-lb-prev').onclick  = function() { navLb(-1); };
+  document.getElementById('pg-lb-next').onclick  = function() { navLb(+1); };
+  lb.addEventListener('click', function(e) { if (e.target === lb) closeLb(); });
+  document.addEventListener('keydown', function(e) {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape')     closeLb();
+    if (e.key === 'ArrowLeft')  navLb(-1);
+    if (e.key === 'ArrowRight') navLb(+1);
+  });
+
+  // Build tree from flat photo list
+  function buildTree(photos) {
+    var root = { name: '', path: [], children: {}, photos: [] };
+    for (var i = 0; i < photos.length; i++) {
+      var photo = photos[i];
+      // Support both new folderPath array and old folder string
+      var path = photo.folderPath
+        ? photo.folderPath
+        : (photo.folder ? [photo.folder] : []);
+      var node = root;
+      for (var j = 0; j < path.length; j++) {
+        var seg = path[j];
+        if (!node.children[seg]) {
+          node.children[seg] = { name: seg, path: node.path.concat(seg), children: {}, photos: [] };
+        }
+        node = node.children[seg];
+      }
+      node.photos.push(photo);
+    }
+    return root;
+  }
+
+  function coverPhoto(node) {
+    if (node.photos.length) return node.photos[0].thumbUrl || node.photos[0].fullUrl;
+    var keys = Object.keys(node.children);
+    for (var i = 0; i < keys.length; i++) {
+      var url = coverPhoto(node.children[keys[i]]);
+      if (url) return url;
+    }
+    return null;
+  }
+
+  function totalPhotos(node) {
+    var n = node.photos.length;
+    var keys = Object.keys(node.children);
+    for (var i = 0; i < keys.length; i++) n += totalPhotos(node.children[keys[i]]);
+    return n;
+  }
+
+  function renderNode(node) {
+    currentNode = node;
+    renderCrumbs(node);
+    grid.innerHTML = '';
+
+    var albums = Object.values ? Object.values(node.children) : Object.keys(node.children).map(function(k){ return node.children[k]; });
+    var photos = node.photos;
+
+    if (!albums.length && !photos.length) {
+      grid.innerHTML = '<div class="pg-message">No photos here yet.</div>';
+      return;
+    }
+
+    // Albums
+    for (var i = 0; i < albums.length; i++) {
+      (function(album) {
+        var cover = coverPhoto(album);
+        var count = totalPhotos(album);
+        var tile  = document.createElement('div');
+        tile.className = 'pg-album';
+        tile.setAttribute('role', 'button');
+        tile.setAttribute('aria-label', 'Open album: ' + album.name);
+        tile.innerHTML =
+          '<img src="' + esc(cover) + '" alt="' + esc(album.name) + '" loading="lazy">' +
+          '<div class="pg-album-overlay">' +
+            '<div class="pg-album-name">' + esc(album.name) + '</div>' +
+            '<div class="pg-album-meta">' + count + ' photo' + (count !== 1 ? 's' : '') + '</div>' +
+          '</div>';
+        tile.querySelector('img').onload = function() { this.classList.add('loaded'); };
+        tile.onclick = function() { renderNode(album); };
+        grid.appendChild(tile);
+      })(albums[i]);
+    }
+
+    // Photos
+    lbPhotos = photos;
+    for (var j = 0; j < photos.length; j++) {
+      (function(photo, idx) {
+        var tile = document.createElement('div');
+        tile.className = 'pg-photo';
+        tile.setAttribute('role', 'button');
+        tile.setAttribute('aria-label', photo.title);
+        tile.innerHTML =
+          '<img src="' + esc(photo.thumbUrl || photo.fullUrl) + '" alt="' + esc(photo.title) + '" loading="lazy">' +
+          '<div class="pg-photo-overlay">' +
+            '<span class="pg-photo-title">' + esc(photo.title) + '</span>' +
+          '</div>';
+        tile.querySelector('img').onload = function() { this.classList.add('loaded'); };
+        tile.onclick = function() { openLb(idx); };
+        grid.appendChild(tile);
+      })(photos[j], j);
+    }
+
+    document.querySelector('.pg-scroll').scrollTop = 0;
+  }
+
+  function renderCrumbs(node) {
+    crumbs.innerHTML = '';
+    if (!node.path.length) return;
+
+    var rootBtn = document.createElement('button');
+    rootBtn.className = 'pg-crumb';
+    rootBtn.textContent = 'All albums';
+    rootBtn.onclick = function() { renderNode(tree); };
+    crumbs.appendChild(rootBtn);
+
+    for (var i = 0; i < node.path.length; i++) {
+      var sep = document.createElement('span');
+      sep.className = 'pg-crumb-sep';
+      sep.textContent = '/';
+      crumbs.appendChild(sep);
+
+      var btn = document.createElement('button');
+      btn.className = 'pg-crumb' + (i === node.path.length - 1 ? ' active' : '');
+      btn.textContent = node.path[i];
+
+      if (i < node.path.length - 1) {
+        (function(targetPath) {
+          btn.onclick = function() {
+            var n = tree;
+            for (var k = 0; k < targetPath.length; k++) n = n.children[targetPath[k]];
+            renderNode(n);
+          };
+        })(node.path.slice(0, i + 1));
+      }
+      crumbs.appendChild(btn);
+    }
+  }
+
+  function openLb(idx) {
+    lbIndex = idx;
+    showLbSlide();
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function showLbSlide() {
+    var photo = lbPhotos[lbIndex];
+    if (!photo) return;
+    lbImg.src = photo.fullUrl || photo.thumbUrl;
+    lbImg.alt = photo.title || '';
+    var datePart = '';
+    try { if (photo.date) datePart = new Date(photo.date).toLocaleDateString('en-GB', { year: 'numeric', month: 'long' }); } catch(e){}
+    lbCap.textContent = [photo.title, datePart].filter(Boolean).join(' · ');
+  }
+
+  function closeLb() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function navLb(dir) {
+    lbIndex = (lbIndex + dir + lbPhotos.length) % lbPhotos.length;
+    showLbSlide();
+  }
+
+  function esc(s) {
+    return (s || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  fetch(DATA_SOURCE)
+    .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(function(data) {
+      var photos = data.photos || data || [];
+      tree = buildTree(photos);
+      renderNode(tree);
+    })
+    .catch(function(err) {
+      grid.innerHTML = '<div class="pg-message">Could not load photos.<br><small>' + esc(err.message) + '</small></div>';
+    });
+
+})();
+</script>
