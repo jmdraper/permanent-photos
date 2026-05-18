@@ -30,18 +30,6 @@
     "year": "2026"
   },
   {
-    "title": "YMS 2023 June Haydn Creation York Minster",
-    "flickrUrl": "https://www.flickr.com/photos/191721460@N06/galleries/72157723340269394/",
-    "coverPhotoUrl": "https://www.flickr.com/photos/allan_harris/53821115526/in/gallery-191721460@N06-72157723340269394/",
-    "year": "2023"
-  },
-  {
-    "title": "YMS 2023 march Brahms Requiem York Barbican",
-    "flickrUrl": "https://www.flickr.com/photos/191721460@N06/galleries/72157723349511192/",
-    "coverPhotoUrl": "https://www.flickr.com/photos/allan_harris/53615504615/in/gallery-191721460@N06-72157723349511192/",
-    "year": "2023"
-  },
-  {
     "title": "2024 November 9th YMS Durufle/Goodall Requiems",
     "flickrUrl": "https://www.flickr.com/photos/191721460@N06/galleries/72157723278687663/",
     "coverPhotoUrl": "https://www.flickr.com/photos/allan_harris/54132608520/in/gallery-191721460@N06-72157723278687663/",
@@ -60,12 +48,6 @@
     "year": "2023"
   },
   {
-    "title": "YMS March 2023 Requiem Aeternae",
-    "flickrUrl": "https://www.flickr.com/photos/191721460@N06/galleries/72157721566712767/",
-    "coverPhotoUrl": "https://www.flickr.com/photos/allan_harris/52746520962/in/gallery-191721460@N06-72157721566712767/",
-    "year": "2023"
-  },
-  {
     "title": "YMS December 2022 Fountains Abbey and A Christmas Celebration",
     "flickrUrl": "https://www.flickr.com/photos/191721460@N06/galleries/72157721322232479/",
     "coverPhotoUrl": "https://www.flickr.com/photos/allan_harris/52544347469/in/gallery-191721460@N06-72157721322232479/",
@@ -76,5 +58,23 @@
     "flickrUrl": "https://www.flickr.com/photos/191721460@N06/galleries/72157720245970777/",
     "coverPhotoUrl": "https://www.flickr.com/photos/allan_harris/51726347586/in/gallery-191721460@N06-72157720245970777/",
     "year": "2021"
+  },
+  {
+    "title": "YMS 2024 June Haydn Creation York Minster",
+    "year": "2024",
+    "flickrUrl": "https://www.flickr.com/photos/191721460@N06/galleries/72157723340269394/",
+    "coverPhotoUrl": "https://www.flickr.com/photos/allan_harris/53821115526/in/gallery-191721460@N06-72157723340269394/"
+  },
+  {
+    "title": "YMS 2024 March Brahms Requiem York Barbican",
+    "year": "2024",
+    "flickrUrl": "https://www.flickr.com/photos/191721460@N06/galleries/72157723349511192/",
+    "coverPhotoUrl": "https://www.flickr.com/photos/allan_harris/53615504615/in/gallery-191721460@N06-72157723349511192/"
+  },
+  {
+    "title": "YMS March 2023 Requiem Aeternam",
+    "year": "2023",
+    "flickrUrl": "https://www.flickr.com/photos/191721460@N06/galleries/72157721566712767/",
+    "coverPhotoUrl": "https://www.flickr.com/photos/allan_harris/52746530407/in/gallery-191721460@N06-72157721566712767/"
   }
 ]

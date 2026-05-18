@@ -34,6 +34,19 @@ const CLIENT = {
 const AUTHOR_NAMES = { 'alh1': 'Allan Harris' };
 function displayName(n) { return AUTHOR_NAMES[n] || n; }
 
+// ── Permanent photographer config ─────────────────────────────────────────────
+
+const PERMANENT_CONFIG_FILE = './permanent-config.json';
+let permanentConfig = { defaultPhotographer: null, albums: {} };
+if (existsSync(PERMANENT_CONFIG_FILE)) {
+  permanentConfig = JSON.parse(readFileSync(PERMANENT_CONFIG_FILE, 'utf8'));
+  console.log(`Loaded permanent config (default photographer: ${permanentConfig.defaultPhotographer || 'none'})`);
+}
+
+function getPhotographer(albumName) {
+  return permanentConfig.albums[albumName] || permanentConfig.defaultPhotographer || null;
+}
+
 async function fetchOEmbed(photoUrl) {
   const url = `https://www.flickr.com/services/oembed/?url=${encodeURIComponent(photoUrl)}&format=json`;
   const res = await fetch(url);
@@ -86,8 +99,11 @@ async function run() {
 
     const yearContents = await getFolder(CLIENT, { folderId: yearFolder.id });
 
+    const records = yearContents.archiveRecords || [];
+    const folders = yearContents.folders || [];
+
     // Photos directly in year folder (not in sub-albums)
-    const directPhotos = yearContents.archiveRecords
+    const directPhotos = records
       .filter(r => r.type === IMAGE_TYPE)
       .map(mapPhoto);
 
@@ -102,14 +118,16 @@ async function run() {
     }
 
     // Sub-album folders
-    for (const albumFolder of yearContents.folders) {
-      const albumContents = await getFolder(CLIENT, { folderId: albumFolder.id });
-      const photos = albumContents.archiveRecords
+    for (const albumFolder of folders) {
+      const albumContents  = await getFolder(CLIENT, { folderId: albumFolder.id });
+      const photos         = (albumContents.archiveRecords || [])
         .filter(r => r.type === IMAGE_TYPE)
         .map(mapPhoto);
 
-      const coverUrl = photos[0]?.thumbUrl || null;
-      const photographer = albumFolder.description || null;
+      const coverUrl       = photos[0]?.thumbUrl || null;
+      const isFirst        = !global._debuggedDesc;
+      if (isFirst) global._debuggedDesc = true;
+      const photographer   = getPhotographer(albumFolder.name);
 
       permanentByYear[year].push({
         type:         'permanent',
@@ -119,7 +137,7 @@ async function run() {
         photos,
       });
 
-      console.log(`    Album: "${albumFolder.name}" — ${photos.length} photos${photographer ? ` — ${photographer}` : ''}`);
+      console.log(`    Album: "${albumFolder.name}" — ${photos.length} photos${photographer ? ` — ${photographer}` : ' — (no photographer)'}`);
     }
   }
 
@@ -144,7 +162,8 @@ async function run() {
       const albums = [...permanent, ...flickr];
 
       return { year, coverUrl, albums };
-    });
+    })
+    .filter(y => y.albums.length > 0);
 
   // ── 4. Write output ─────────────────────────────────────────────────────────
   const output = {

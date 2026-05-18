@@ -1,16 +1,3 @@
-/**
- * generate-manifest.mjs
- *
- * USAGE:
- *   PERMANENT_TOKEN="eyJ..." PERMANENT_FOLDER_ID=109746 node generate-manifest.mjs
- *
- * How to find your PERMANENT_FOLDER_ID:
- *   Safari DevTools → Storage → Local Storage → app.permanent.org → "root" key → folderId value
- *
- * How to get your PERMANENT_TOKEN:
- *   Same Storage panel → AUTH_TOKEN key
- */
-
 import { getFolder } from '@permanentorg/sdk';
 import { writeFileSync } from 'fs';
 
@@ -28,7 +15,6 @@ async function run() {
   console.log(`Fetching folder ${FOLDER_ID}…`);
   const photos = [];
   await collectPhotos(FOLDER_ID, [], photos, 0);
-
   const manifest = { generatedAt: new Date().toISOString(), totalPhotos: photos.length, photos };
   writeFileSync(OUTPUT, JSON.stringify(manifest, null, 2));
   console.log(`\n✓ Wrote ${photos.length} photos to ${OUTPUT}`);
@@ -40,28 +26,32 @@ async function collectPhotos(folderId, pathSoFar, photos, depth) {
   console.log(`${indent}Scanning: ${displayPath}`);
 
   let folder;
-  try { folder = await getFolder(CLIENT, { folderId }); }
-  catch (err) { console.error(`${indent}  Could not load folder ${folderId}: ${err.message}`); return; }
+  try {
+    folder = await getFolder(CLIENT, { folderId });
+  } catch (err) {
+    // Exit code 2 = token expired or auth failure — triggers the notification webhook
+    if (err.statusCode === 401 || err.statusCode === 403) {
+      console.error('AUTH_EXPIRED: Bearer token is no longer valid. Please refresh PERMANENT_TOKEN in GitHub secrets.');
+      process.exit(2);
+    }
+    console.error(`${indent}  Could not load folder ${folderId}: ${err.message}`);
+    return;
+  }
 
   for (const record of folder.archiveRecords) {
     if (record.type !== IMAGE_TYPE) continue;
-
     const original  = record.files.find(f => f.derivativeType === 'file.format.original');
     const converted = record.files.find(f => f.derivativeType === 'file.format.converted');
     const fallback  = record.files[0];
-
     const fullUrl  = (original || fallback)?.fileUrl;
     const thumbUrl = (converted || original || fallback)?.fileUrl;
     if (!fullUrl) continue;
-
     photos.push({
       id:       record.id,
       title:    record.displayName || record.fileSystemCompatibleName || 'Untitled',
       date:     record.displayDate?.toISOString() ?? record.createdAt?.toISOString() ?? null,
       thumbUrl,
       fullUrl,
-      // Full path array, e.g. ["Concerts", "2024 Season"]
-      // Empty array means the photo is at the root level
       folderPath: [...pathSoFar],
     });
   }
@@ -74,4 +64,11 @@ async function collectPhotos(folderId, pathSoFar, photos, depth) {
   }
 }
 
-run().catch(err => { console.error('Error:', err.message || err); process.exit(1); });
+run().catch(err => {
+  if (err.statusCode === 401 || err.statusCode === 403) {
+    console.error('AUTH_EXPIRED: Bearer token is no longer valid. Please refresh PERMANENT_TOKEN in GitHub secrets.');
+    process.exit(2);
+  }
+  console.error('Error:', err.message || err);
+  process.exit(1);
+});
