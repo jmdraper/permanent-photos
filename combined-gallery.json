@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-06-16T03:19:12.152Z",
+  "generatedAt": "2026-06-16T09:20:50.325Z",
   "totalYears": 16,
-  "totalAlbums": 50,
+  "totalAlbums": 51,
   "years": [
     {
       "year": "2026",
@@ -13,6 +13,13 @@
           "photographer": "Allan Harris",
           "coverUrl": "https://live.staticflickr.com/65535/55151990497_a973f0fcc6_b.jpg",
           "flickrUrl": "https://www.flickr.com/photos/191721460@N06/galleries/72157724827236927/"
+        },
+        {
+          "type": "flickr",
+          "name": "Elgar Dream of Gerontius",
+          "photographer": "Allan Harris",
+          "coverUrl": "https://live.staticflickr.com/65535/55323156264_da05cb36fb_b.jpg",
+          "flickrUrl": "https://www.flickr.com/photos/191721460@N06/galleries/72157725044893879/"
         }
       ]
     },
